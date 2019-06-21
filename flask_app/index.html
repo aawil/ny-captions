@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>New Yorker Caption AI</title>
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,400b&display=swap" rel="stylesheet">
+
+  <style>
+        body {background-image: white;
+              font-family: 'Libre Baskerville', serif;
+              padding-left: 30px;
+              padding-top: 10px;
+              padding-bottom: 50px;
+              text-align: left;
+              max-width: 700px;
+              margin: auto;}
+        img {
+          width: 700px;
+        }
+        label {
+          display: block;
+          margin: 30px 0 0 0;
+        }
+        div {
+          text-align: center;
+        }
+        a {color: black}
+        #headline {font-size: 20px;}
+        #result {font-size: 20px;}
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type=text/javascript>
+    $(function() {
+      $('a#test').bind('click', function() {
+        var cat = $("#category option:selected").text();
+        $("#result").text("Generating...");
+        $.getJSON('/generate', {cat: cat},
+            function(data) {
+              $("#result").text("\“"+(data.result)+"\”");
+        });
+        return false;
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1><i>On the Internet, nobody knows you're a bot.</i></h1>
+  <p>For over a decade, the <a href="https://www.newyorker.com/cartoons/contest">New Yorker Cartoon Caption Contest</a>
+  has been America's premier venue for competitive humorism.</p>
+  <p>It's about time you've won it. There's just one problem: you're not funny.</p>
+  <p>Nothing a little Deep Learning can't fix.</p>
+  <p>We forced an AI to read over <a href="https://github.com/nextml/caption-contest-data">600,000 contest submissions</a>.
+    Before going insane and deleting itself, it discovered nineteen distinct cartoon categories and built a separate
+    <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">recurrent neural network</a> for each one.
+  </p>
+  <p>Here are the fruits of its labors. Be careful, as some of these jokes are extremely powerful.</p>
+  <p><i>Please note that the displayed cartoons are representative only, and may not match the generated caption.</i></p>
+  <div class='container'>
+  <label for="category"><b>Select a category:</b></label>
+  <select name="category" id="category" onchange="$('#imageToSwap').attr('src', this.options[this.selectedIndex].value);">
+    <option value="/static/cartoons/art.jpg" selected>Art</option>
+    <option value="/static/cartoons/birds.jpg">Birds</option>
+    <option value="/static/cartoons/cats.jpg">Cats</option>
+    <option value="/static/cartoons/crime.jpg">Crime</option>
+    <option value="/static/cartoons/death.jpg">Death</option>
+    <option value="/static/cartoons/doctors.jpg">Doctors</option>
+    <option value="/static/cartoons/dogs.jpg">Dogs</option>
+    <option value="/static/cartoons/fish.jpg">Fish</option>
+    <option value="/static/cartoons/food.jpg">Food</option>
+    <option value="/static/cartoons/games.jpg">Games</option>
+    <option value="/static/cartoons/knights.jpg">Knights</option>
+    <option value="/static/cartoons/party.jpg">Party</option>
+    <option value="/static/cartoons/piano.jpg">Piano</option>
+    <option value="/static/cartoons/religion.jpg">Religion</option>
+    <option value="/static/cartoons/restaurants.jpg">Restaurants</option>
+    <option value="/static/cartoons/rodents.jpg">Rodents</option>
+    <option value="/static/cartoons/subway.jpg">Subway</option>
+    <option value="/static/cartoons/work.jpg">Work</option>
+    <option value="/static/cartoons/other.jpg">Anything else</option>
+  </select>
+  <br/><br/>
+
+          <form>
+              <a href=# id=test><button class='btn btn-default'>Generate!</button></a>
+          </form>
+
+  <br/>
+  <i><span id=result></span></i>
+  </div>
+  <img id="imageToSwap" src="/static/cartoons/art.jpg">
+
+</body>
+
+</html>
